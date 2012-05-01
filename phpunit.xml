@@ -6,7 +6,7 @@
       <file>tests/Combatants/SwordsmanTest.php</file>
       <file>tests/Combatants/BruteTest.php</file>
       <file>tests/Combatants/GrapplerTest.php</file>
-      <file>tests/Combatants/CombatantFactory.php</file>
+      <file>tests/Combatants/CombatantFactoryTest.php</file>
     </testsuite>
   </testsuites>
 </phpunit>
