@@ -1,6 +1,8 @@
 <?php
 
 class Grappler extends Combatant {
+    use HasRetaliation;
+
     protected function generateHealth() {
         $this->health = (int) $this->randomNumberBetween(60, 100);
     }

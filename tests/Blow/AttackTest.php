@@ -1,50 +1,25 @@
 <?php
 
-include_once('lib/Blow/Blow.php');
 include_once('lib/Blow/BlowFactory.php');
-include_once('lib/Blow/Attack.php');
-include_once('lib/Blow/Retaliation.php');
+include_once('tests/Blow/BlowTest.php');
 
-class AttackTest extends PHPUnit_Framework_TestCase {
-    
-    public function setUp() {
-        // Standard values
-        $this->attackStrength      = 70;
-        $this->retaliationStrength = 10;
-        $this->blowFactory = new BlowFactory();
-        // Standard attack
-        $this->attack      = $this->blowFactory->createAttack($this->attackStrength);
-        // Standard retaliation
-        $this->retaliation = $this->blowFactory->createRetaliation($this->retaliationStrength);
+class AttackTest extends BlowTest {
+    private $retaliationStrength = 10; 
+
+    protected function getBlow($strength) {
+        return (new BlowFactory())->createAttack($strength);
     }
-    
-    /**
-     * @test
-     * @covers Attack::getDamage
-     */
-    public function initialDamageIsNull() {
-        $this->assertNull($this->attack->getDamage());
-    }
-    
-    /**
-     * @test
-     * @covers Attack::setDamage
-     * @covers Attack::getDamage
-     */
-    public function canSetAndRetrieveDamage() {
-        $damage = 23;
-        $this->assertTrue($this->attack->setDamage($damage));
-        $this->assertEquals($damage, $this->attack->getDamage());
-    }
-    
+
     /**
      * @test
      * @covers Attack::isStunning
      */
     public function canRetrieveStunningStatus() {
-        $stunningAttack = new Attack(50, true);
-        $this->assertTrue($stunningAttack->isStunning());
-        $this->assertFalse($this->attack->isStunning());
+        $this->assertFalse($this->blow->isStunning());
+        $this->blow->setStunning(true);
+        $this->assertTrue($this->blow->isStunning());
+        $this->blow->setStunning(false);
+        $this->assertFalse($this->blow->isStunning());
     }
     
     /**
@@ -53,9 +28,10 @@ class AttackTest extends PHPUnit_Framework_TestCase {
      * @covers Attack::getCounterAttackDamage
      */
     public function canSetAndGetRetaliation() {
-        $this->assertNull($this->attack->getRetaliation());
-        $this->assertTrue($this->attack->setRetaliation($this->retaliation));
-        $this->assertEquals($this->retaliationStrength, $this->attack->getRetaliation()->getStrength());
+        $retaliation = (new BlowFactory())->createRetaliation($this->retaliationStrength);
+        $this->assertNull($this->blow->getRetaliation());
+        $this->assertTrue($this->blow->setRetaliation($retaliation));
+        $this->assertEquals($this->retaliationStrength, $this->blow->getRetaliation()->getStrength());
     }
     
     /**
@@ -63,31 +39,10 @@ class AttackTest extends PHPUnit_Framework_TestCase {
      * @covers Attack::missed
      */
     public function canSetAttackMissed() {
-        $this->assertFalse($this->attack->hasMissed());
-        $this->assertTrue($this->attack->missed());
-        $this->assertTrue($this->attack->hasMissed());
-        $this->assertEquals(0, $this->attack->getDamage());
-    }
-    
-    /**
-     * @test
-     * @covers Attack::getAttackStrength
-     */
-    public function canGetAttackStrength() {
-        $this->assertEquals($this->attackStrength, $this->attack->getStrength());
-    }
-    
-    /**
-     * @test
-     * @covers Attack::setKillingBlow
-     * @covers Attack::getKillingBlow
-     */
-    public function canSetAndGetKillingState() {
-        $this->assertFalse($this->attack->isKilling());
-        $this->attack->setKilling(true);
-        $this->assertTrue($this->attack->isKilling());
-        $this->attack->setKilling(false);
-        $this->assertFalse($this->attack->isKilling());
+        $this->assertFalse($this->blow->hasMissed());
+        $this->assertTrue($this->blow->missed());
+        $this->assertTrue($this->blow->hasMissed());
+        $this->assertEquals(0, $this->blow->getDamage());
     }
 }
 

@@ -13,9 +13,22 @@ class GrapplerTest extends CombatantTest {
         'luck'     => ['lower' => 0.3, 'upper' => 0.4]
     );
 
-
     protected function createCombatant($randomiser = null) {
         return new Grappler($randomiser);
+    }
+
+    /**
+     * @test
+     * @covers Combatant::receiveAttack
+     */
+    public function canDodgeAttack() {
+        // Note - strong combatant will always dodge an attack because we rigged the randomiser
+        $attack = new Attack(10);
+        $attack = $this->strongCombatant->receiveAttack($attack);
+        $this->assertTrue($attack->hasMissed());
+        $this->assertEquals(0, $attack->getDamage());
+        $this->assertInstanceOf('Retaliation', $attack->getRetaliation());
+        $this->assertEquals(10, $attack->getRetaliation()->getStrength());
     }
 }
 

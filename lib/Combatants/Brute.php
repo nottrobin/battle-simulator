@@ -1,6 +1,8 @@
 <?php
 
 class Brute extends Combatant {
+    use Stuns;
+
     protected function generateHealth() {
         $this->health = (int) $this->randomNumberBetween(90, 100);
     }

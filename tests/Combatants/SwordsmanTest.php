@@ -19,6 +19,23 @@ class SwordsmanTest extends CombatantTest {
     }
 
     /**
+     * @test
+     * @covers Swordsman::getStrength
+     */
+    public function attackDoublesSometimes() {
+        $trueGenerator  = new BooleanGenerator(1);
+        
+        $weakAttack   = $this->weakCombatant->getAttackStrength($trueGenerator);
+        $strongAttack = $this->strongCombatant->getAttackStrength($trueGenerator);
+        $randomAttack = $this->randomCombatant->getAttackStrength($trueGenerator);
+
+        $this->assertEquals($this->attributes['strength']['lower'] * 2, $weakAttack);
+        $this->assertEquals($this->attributes['strength']['upper'] * 2, $strongAttack);
+        $this->assertLessThanOrEqual($this->attributes['strength']['upper'] * 2, $randomAttack);
+        $this->assertGreaterThanOrEqual($this->attributes['strength']['lower'] * 2, $randomAttack);
+    }
+
+    /**
      * We need to override this for Swordsman to pass the $falseGenerator
      * to make sure attack is never doubled (that comes in the next test)
      * 
@@ -39,20 +56,21 @@ class SwordsmanTest extends CombatantTest {
     }
 
     /**
+     * We need to override this for Swordsman to pass the $falseGenerator
+     * to make sure attack is never doubled (that comes in the next test)
+     *
      * @test
-     * @covers Swordsman::getStrength
+     * @covers Combatant::createAttack
      */
-    public function attackDoublesSometimes() {
-        $trueGenerator  = new BooleanGenerator(1);
-        
-        $weakAttack   = $this->weakCombatant->getAttackStrength($trueGenerator);
-        $strongAttack = $this->strongCombatant->getAttackStrength($trueGenerator);
-        $randomAttack = $this->randomCombatant->getAttackStrength($trueGenerator);
+    public function canAttack() {
+        $falseGenerator = new BooleanGenerator(0);
 
-        $this->assertEquals($this->attributes['strength']['lower'] * 2, $weakAttack);
-        $this->assertEquals($this->attributes['strength']['upper'] * 2, $strongAttack);
-        $this->assertLessThanOrEqual($this->attributes['strength']['upper'] * 2, $randomAttack);
-        $this->assertGreaterThanOrEqual($this->attributes['strength']['lower'] * 2, $randomAttack);
+        $attack = $this->weakCombatant->createAttack();
+        $expectedAttack = new Attack($this->weakCombatant->getAttackStrength($falseGenerator));
+        
+        $this->assertInstanceOf('Attack', $attack);
+        
+        $this->assertEquals($expectedAttack, $attack);
     }
 }
 

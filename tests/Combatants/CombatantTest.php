@@ -126,8 +126,8 @@ abstract class CombatantTest extends PHPUnit_Framework_TestCase {
     
     /**
      * @test
-     * @covers Combatant::attack
-    */
+     * @covers Combatant::createAttack
+     */
     public function canAttack() {
         $attack = $this->weakCombatant->createAttack();
         $expectedAttack = new Attack($this->weakCombatant->getAttackStrength());

@@ -8,7 +8,7 @@ abstract class Combatant {
     protected $luck             = null;
     private   $name             = null;
     protected $randomiser       = null;
-    protected $booleanGenerator = null;
+    protected $blowFactory      = null;
     
     public function __construct(Randomiser $randomiser = null) {
         $this->setRandomiser($randomiser);
@@ -57,7 +57,7 @@ abstract class Combatant {
     }
     
     public function createAttack() {
-        return new Attack($this->getAttackStrength());
+        return $this->getBlowFactory()->createAttack($this->getAttackStrength());
     }
     
     public function receiveAttack(Attack $attack) {
@@ -94,7 +94,7 @@ abstract class Combatant {
         return $startingHealth - $this->getHealth();
     }
 
-    private function dodgedAttack() {
+    protected function dodgedAttack() {
         return 1 - $this->randomiser->generate() < $this->getLuck();
     }
     
@@ -116,7 +116,18 @@ abstract class Combatant {
         return $this->randomiser;
     }
 
-    private function isDead() {
+    public function setBlowFactory(BlowFactory $blowFactory) {
+        $this->blowFactory = $blowFactory;
+    }
+
+    protected function getBlowFactory() {
+        if(!$this->blowFactory instanceof BlowFactory) {
+            $this->blowFactory = new BlowFactory();
+        }
+        return $this->blowFactory;
+    }
+
+    protected function isDead() {
         return $this->getHealth() <= 0;
     }
     
@@ -130,3 +141,47 @@ abstract class Combatant {
     
     abstract protected function generateLuck();
 }
+
+// Traits
+trait AttackBonus {
+    public function getAttackStrength(BooleanGenerator $boolGenerator = null) {
+        // Default boolean generator to 5%
+        $boolGenerator = isset($boolGenerator) ? $boolGenerator : new BooleanGenerator(0.05);
+
+        $attackStrength = $this->strength;
+        
+        if($boolGenerator->generate()) {
+            $attackStrength = $attackStrength * 2;
+        }
+        
+        return $attackStrength;
+    }
+}
+
+trait Stuns {
+    public function createAttack(BooleanGenerator $boolGenerator = null) {
+        // Default boolean generator to 2%
+        $boolGenerator = isset($boolGenerator) ? $boolGenerator : new BooleanGenerator(0.02);
+        $attack = new Attack($this->getAttackStrength());
+        $attack->setStunning($boolGenerator->generate());
+        return $attack;
+    }
+}
+
+trait HasRetaliation {
+    public function receiveAttack(Attack $attack) {
+        $potentialDamage = $attack->getStrength() - $this->getDefence();
+
+        if($this->dodgedAttack()) {
+            $attack->missed();
+            $attack->setRetaliation($this->getBlowFactory()->createRetaliation(10));
+        } else {
+            $damageDealt = $this->dealDamage($potentialDamage);
+            $attack->setDamage($damageDealt);
+            $attack->setKilling($this->isDead());
+        }
+
+        return $attack;
+    }
+}
+

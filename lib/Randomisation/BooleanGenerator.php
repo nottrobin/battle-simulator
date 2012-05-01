@@ -8,6 +8,6 @@ class BooleanGenerator {
     }
     
     public function generate() {
-        return rand(0, 99) < $this->percentageChance;
+        return rand(1, 99) < $this->percentageChance;
     }
 }
