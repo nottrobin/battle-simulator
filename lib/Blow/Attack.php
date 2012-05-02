@@ -1,5 +1,7 @@
 <?php
 
+require_once('lib/Blow/Blow.php');
+
 /**
  * This is a transaction class to be passed between Combatants in a BattleSimulation
  * It holds data about an attack made by one contestant on another

@@ -47,3 +47,18 @@ echo "\n"
      . ' and ' . $combatantTwo->getLuck() . ' luck.'
      . "\n";
 
+$simulation = new BattleSimulation($combatantOne, $combatantTwo);
+
+while($turn = $simulation->performTurn()) {
+    $att = $turn->getAttacker();
+    $def = $turn->getDefender();
+    $attack = $turn->getAttack();
+
+    if($turn->missed()) {
+        echo $att->getName() . ' missed their turn' . "\n";
+        continue;
+    }
+
+    echo $att->getName() . ' attacked ' . $def->getName() . "\n";
+}
+

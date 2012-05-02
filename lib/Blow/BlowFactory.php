@@ -1,5 +1,8 @@
 <?php
 
+require_once('lib/Blow/Attack.php');
+require_once('lib/Blow/Retaliation.php');
+
 class BlowFactory {
     /**
      * @return Attack (specialisation of Blow)

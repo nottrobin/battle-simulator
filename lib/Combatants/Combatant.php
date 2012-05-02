@@ -1,5 +1,9 @@
 <?php
 
+require_once('lib/Randomisation/Randomiser.php');
+require_once('lib/Randomisation/BooleanGenerator.php');
+require_once('lib/Blow/BlowFactory.php');
+
 abstract class Combatant {
     protected $health           = null;
     protected $strength         = null;
