@@ -6,6 +6,7 @@ abstract class Combatant {
     protected $defence          = null;
     protected $speed            = null;
     protected $luck             = null;
+    protected $stunned          = false;
     private   $name             = null;
     protected $randomiser       = null;
     protected $blowFactory      = null;
@@ -24,6 +25,9 @@ abstract class Combatant {
     }
     
     public function getAttackStrength() {
+        return $this->getStrength();
+    }
+    public function getStrength() {
         return $this->strength;
     }
     
@@ -68,6 +72,7 @@ abstract class Combatant {
         } else {
             $damageDealt = $this->dealDamage($potentialDamage);
             $attack->setDamage($damageDealt);
+            $this->setStunned($attack->isStunning());
             $attack->setKilling($this->isDead());
         }
 
@@ -129,6 +134,16 @@ abstract class Combatant {
 
     protected function isDead() {
         return $this->getHealth() <= 0;
+    }
+
+    public function isStunned() {
+        return $this->stunned;
+    }
+
+    protected function setStunned($stunned) {
+        $this->stunned = $stunned;
+
+        return true;
     }
     
     abstract protected function generateHealth();

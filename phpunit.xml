@@ -1,12 +1,7 @@
 <phpunit colors="true">
   <testsuites>
     <testsuite name="BattleSimulator">
-      <file>tests/Blow/AttackTest.php</file>
-      <file>tests/Blow/RetaliationTest.php</file>
-      <file>tests/Combatants/SwordsmanTest.php</file>
-      <file>tests/Combatants/BruteTest.php</file>
-      <file>tests/Combatants/GrapplerTest.php</file>
-      <file>tests/Combatants/CombatantFactoryTest.php</file>
+        <directory>tests</directory>
     </testsuite>
   </testsuites>
 </phpunit>

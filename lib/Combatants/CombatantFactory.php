@@ -1,5 +1,9 @@
 <?php
 
+require_once('lib/Randomisation/Randomiser.php');
+require_once('lib/Combatants/Swordsman.php');
+require_once('lib/Combatants/Brute.php');
+require_once('lib/Combatants/Grappler.php');
 
 class CombatantFactory {
     private $randomiser = null;
@@ -28,7 +32,7 @@ class CombatantFactory {
         return $this->{'create'.$className}();
     }
     
-    public function setRandomiser(Randomiser $randomiser) {
+    public function setRandomiser(Randomiser $randomiser = null) {
         $this->randomiser = $randomiser;
     }
     

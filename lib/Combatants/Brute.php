@@ -1,5 +1,7 @@
 <?php
 
+require_once('lib/Combatants/Combatant.php');
+
 class Brute extends Combatant {
     use Stuns;
 
