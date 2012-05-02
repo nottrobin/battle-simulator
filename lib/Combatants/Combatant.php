@@ -82,7 +82,7 @@ abstract class Combatant {
         return $retaliation;
     }
     
-    public function dealDamage($damage) {
+    protected function dealDamage($damage) {
         $startingHealth = $this->getHealth();
 
         $this->health -= $damage;
