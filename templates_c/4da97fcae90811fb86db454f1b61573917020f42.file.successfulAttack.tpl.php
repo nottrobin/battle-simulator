@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2012-05-03 15:26:07
+<?php /* Smarty version Smarty-3.1.8, created on 2012-05-03 16:34:59
          compiled from "templates/successfulAttack.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:5613766674fa278666d73a0-20238914%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19888130404fa2a5a3688ed3-19076314%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,12 +11,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '5613766674fa278666d73a0-20238914',
+  'nocache_hash' => '19888130404fa2a5a3688ed3-19076314',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_4fa278666f1611_94404883',
   'variables' => 
   array (
     'attacker' => 0,
@@ -31,8 +29,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'health' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.8',
+  'unifunc' => 'content_4fa2a5a36a9a06_44756126',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_4fa278666f1611_94404883')) {function content_4fa278666f1611_94404883($_smarty_tpl) {?><?php echo $_smarty_tpl->tpl_vars['attacker']->value;?>
+<?php if ($_valid && !is_callable('content_4fa2a5a36a9a06_44756126')) {function content_4fa2a5a36a9a06_44756126($_smarty_tpl) {?><?php echo $_smarty_tpl->tpl_vars['attacker']->value;?>
  <?php echo $_smarty_tpl->tpl_vars['verb']->value;?>
  <?php echo $_smarty_tpl->tpl_vars['weaponAdjective']->value;?>
  <?php echo $_smarty_tpl->tpl_vars['noun']->value;?>

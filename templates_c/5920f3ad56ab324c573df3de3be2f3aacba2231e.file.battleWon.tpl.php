@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2012-05-03 13:47:01
+<?php /* Smarty version Smarty-3.1.8, created on 2012-05-03 16:34:59
          compiled from "templates/battleWon.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:905500104fa27e4553cdb9-26718576%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19412514474fa2a5a36f45d5-30839684%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '905500104fa27e4553cdb9-26718576',
+  'nocache_hash' => '19412514474fa2a5a36f45d5-30839684',
   'function' => 
   array (
   ),
@@ -23,9 +23,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_4fa27e45583ee0_46000136',
+  'unifunc' => 'content_4fa2a5a36fe3f1_62592167',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_4fa27e45583ee0_46000136')) {function content_4fa27e45583ee0_46000136($_smarty_tpl) {?>The battle is over.
+<?php if ($_valid && !is_callable('content_4fa2a5a36fe3f1_62592167')) {function content_4fa2a5a36fe3f1_62592167($_smarty_tpl) {?>The battle is over.
 <?php echo $_smarty_tpl->tpl_vars['winner']->value;?>
  has won (with <?php echo $_smarty_tpl->tpl_vars['health']->value;?>
  health left).

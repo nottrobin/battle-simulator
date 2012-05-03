@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2012-05-03 14:43:53
+<?php /* Smarty version Smarty-3.1.8, created on 2012-05-03 16:34:59
          compiled from "templates/specialSkill.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:21114327924fa28abaa33292-74190321%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:8335857894fa2a5a36ac313-63412270%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,12 +11,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '21114327924fa28abaa33292-74190321',
+  'nocache_hash' => '8335857894fa2a5a36ac313-63412270',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_4fa28abaaefce8_02632948',
   'variables' => 
   array (
     'luckyStrike' => 0,
@@ -28,8 +26,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'health' => 0,
   ),
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.8',
+  'unifunc' => 'content_4fa2a5a36d2533_36900118',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_4fa28abaaefce8_02632948')) {function content_4fa28abaaefce8_02632948($_smarty_tpl) {?><?php if ($_smarty_tpl->tpl_vars['luckyStrike']->value){?>A Lucky Strike! <?php echo $_smarty_tpl->tpl_vars['attacker']->value;?>
+<?php if ($_valid && !is_callable('content_4fa2a5a36d2533_36900118')) {function content_4fa2a5a36d2533_36900118($_smarty_tpl) {?><?php if ($_smarty_tpl->tpl_vars['luckyStrike']->value){?>A Lucky Strike! <?php echo $_smarty_tpl->tpl_vars['attacker']->value;?>
  dealt double damage!
 <?php }?>
 <?php if ($_smarty_tpl->tpl_vars['stunningBlow']->value){?>Stunning Blow! <?php echo $_smarty_tpl->tpl_vars['defender']->value;?>
