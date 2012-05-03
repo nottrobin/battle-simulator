@@ -8,11 +8,13 @@ require_once('lib/Smarty/Smarty.class.php');
 
 $factory = new CombatantFactory();
 
+$firstName  = readline("What name will you deign to give the first combatant?\n");
+$secondName = readline("What name shall the second combatant have?\n");
+
 $smarty = new Smarty();
-$smarty->assign('number', 'first');
-$smarty->display('templates/promptForName.tpl');
-$name = readline('Giza name');
-die($name);
+
+die(var_dump($firstName, $secondName));
+
 exit;
 // Get the names for my combatants
 // echo "Give me the name for the first combatant:\n";
