@@ -1,7 +1,8 @@
-<phpunit colors="true">
-  <testsuites>
-    <testsuite name="BattleSimulator">
-        <directory>tests</directory>
-    </testsuite>
-  </testsuites>
+<phpunit bootstap="/home/robin/projects/BattleSimulator/lib/bootstrap.php" colors="true" forceCoversAnnotation="true">
+    <testsuites>
+        <testsuite name="BattleSimulator">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites> 
 </phpunit>
+
