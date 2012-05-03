@@ -10,9 +10,9 @@ abstract class CombatantTest extends PHPUnit_Framework_TestCase {
         $this->oneRandomiser = new Randomiser(1);
 
         // Create lowest and highest possible combatants, and a random one
-        $this->weakCombatant   = $this->createCombatant($this->zeroRandomiser);
-        $this->strongCombatant = $this->createCombatant($this->oneRandomiser);
-        $this->randomCombatant = $this->createCombatant();
+        $this->weakCombatant   = $this->createCombatant('phil', $this->zeroRandomiser);
+        $this->strongCombatant = $this->createCombatant('steve', $this->oneRandomiser);
+        $this->randomCombatant = $this->createCombatant('chips');
     }
 
     
@@ -93,23 +93,22 @@ abstract class CombatantTest extends PHPUnit_Framework_TestCase {
     
     /**
      * @test
-     * @covers Combatant::setName
      * @covers Combatant::getName
      */
-    public function canSetName() {
-         $name = 'Robin Winslow';
-         $this->assertTrue($this->weakCombatant->setName($name));
-         $this->assertEquals($name, $this->weakCombatant->getName());
+    public function canGetName() {
+         $this->assertEquals('phil', $this->weakCombatant->getName());
+         $this->assertEquals('steve', $this->strongCombatant->getName());
+         $this->assertEquals('chips', $this->randomCombatant->getName());
     }
      
      /**
       * @test
       * @covers Combatant::setName
-      * @expectedException PHPUnit_Framework_Error_Warning
+      * @expectedException CombatantNameLengthException
       */
-    public function longNameDoesntSetGeneratesWarning() {
+    public function longNameGeneratesException() {
         $longName = 'This is one ridiculously long name, so help me god it is. Derpty derpitty herp derp.';
-        $this->assertFalse($this->strongCombatant->setName($longName));
+        $this->createCombatant($longName);
     }
     
     /**

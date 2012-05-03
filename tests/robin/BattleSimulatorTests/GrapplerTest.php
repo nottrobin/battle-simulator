@@ -12,8 +12,8 @@ class GrapplerTest extends CombatantTest {
         'luck'     => ['lower' => 0.3, 'upper' => 0.4]
     );
 
-    protected function createCombatant($randomiser = null) {
-        return new Grappler($randomiser);
+    protected function createCombatant($name, $randomiser = null) {
+        return new Grappler($name, $randomiser);
     }
 
     /**

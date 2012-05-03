@@ -8,8 +8,8 @@ require_once('lib/robin/BattleSimulator/Retaliation.php');
 class SimulationTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $combatantFactory = new CombatantFactory();
-        $this->combatantOne     = $combatantFactory->createSwordsman();
-        $this->combatantTwo     = $combatantFactory->createBrute();
+        $this->combatantOne     = $combatantFactory->createSwordsman('phil');
+        $this->combatantTwo     = $combatantFactory->createBrute('steve');
         $this->simulation = new Simulation($this->combatantOne, $this->combatantTwo);
     }
     

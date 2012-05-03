@@ -13,23 +13,21 @@ class CombatantFactory {
         $this->setRandomiser($randomiser);
     }
     
-    public function createSwordsman(Randomiser $randomiser = null) {
-        return new Swordsman($randomiser);
+    public function createSwordsman($name, Randomiser $randomiser = null) {
+        return new Swordsman($name, $randomiser);
     }
     
-    public function createBrute(Randomiser $randomiser = null) {
-        return new Brute($randomiser);
+    public function createBrute($name, Randomiser $randomiser = null) {
+        return new Brute($name, $randomiser);
     }
     
-    public function createGrappler(Randomiser $randomiser = null) {
-        return new Grappler($randomiser);
+    public function createGrappler($name, Randomiser $randomiser = null) {
+        return new Grappler($name, $randomiser);
     }
     
-    public function createRandom() {
-        $int = floor($this->getRandomiser()->generate() * count($this->classes));
-        if($int == count($this->classes)) {$int--;}
-        $className = $this->classes[$int];
-        return $this->{'create'.$className}();
+    public function createRandom($name) {
+        $className = $this->getRandomiser()->getArrayItem($this->classes);
+        return $this->{'create'.$className}($name);
     }
     
     public function setRandomiser(Randomiser $randomiser = null) {

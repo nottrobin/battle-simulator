@@ -6,8 +6,8 @@ require_once('lib/robin/BattleSimulator/Turn.php');
 class TurnTest extends PHPUnit_Framework_TestCase {
     public function setUp() {
         $combatantFactory = new CombatantFactory();
-        $attacker         = $combatantFactory->createSwordsman();
-        $defender         = $combatantFactory->createBrute();
+        $attacker         = $combatantFactory->createSwordsman('phil');
+        $defender         = $combatantFactory->createBrute('steve');
         $this->turn       = new Turn($attacker, $defender);
     }
     

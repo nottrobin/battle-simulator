@@ -13,8 +13,8 @@ class BruteTest extends CombatantTest {
         'luck'     => ['lower' => 0.3, 'upper' => 0.35]
     );
 
-    protected function createCombatant($randomiser = null) {
-        return new Brute($randomiser);
+    protected function createCombatant($name, $randomiser = null) {
+        return new Brute($name, $randomiser);
     }
 
     /**

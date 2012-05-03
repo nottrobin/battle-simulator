@@ -14,8 +14,9 @@ abstract class Combatant {
     protected $randomiser       = null;
     protected $blowFactory      = null;
     
-    public function __construct(Randomiser $randomiser = null) {
+    public function __construct($name, Randomiser $randomiser = null) {
         $this->setRandomiser($randomiser);
+        $this->setName($name);
         $this->generateHealth();
         $this->generateStrength();
         $this->generateDefence();
@@ -43,11 +44,11 @@ abstract class Combatant {
         return $this->luck;
     }
     
-    public function setName($name) {
+    private function setName($name) {
         $success = false;
         
         if(strlen($name) > 30) {
-            trigger_error('Name not set: Must be 30 characters or less', E_USER_WARNING);
+            throw new CombatantNameLengthException('Name not set: Must be 30 characters or less');
         } else {
             $this->name = $name;
             $success = true;
@@ -153,4 +154,6 @@ abstract class Combatant {
     
     abstract protected function generateLuck();
 }
+
+class CombatantNameLengthException extends LengthException {}
 

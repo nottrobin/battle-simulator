@@ -9,11 +9,32 @@ require_once('lib/Smarty/Smarty.class.php');
 $factory = new CombatantFactory();
 
 $firstName  = readline("What name will you deign to give the first combatant?\n");
+$firstCombatant = $factory->createRandom($firstName);
+describeCombatant($firstCombatant);
+
 $secondName = readline("What name shall the second combatant have?\n");
+$secondCombatant = $factory->createRandom($secondName);
+describeCombatant($secondCombatant);
 
-$smarty = new Smarty();
+$simulation = new Simulation($firstCombatant, $secondCombatant);
+while($turn = $simulation->performTurn()) {
+    die(var_dump($turn->getAttack()));
+}
 
-die(var_dump($firstName, $secondName));
+
+function describeCombatant(Combatant $combatant) {
+    $smarty = new Smarty();
+    $smarty->assign([
+        'name'     => $combatant->getName(),
+        'class'    => get_class($combatant),
+        'health'   => $combatant->getHealth(),
+        'strength' => $combatant->getStrength(),
+        'defence'  => $combatant->getDefence(),
+        'speed'    => $combatant->getSpeed(),
+        'luck'     => $combatant->getLuck()
+    ]);
+    $smarty->display('templates/combatantDescription.tpl');
+}
 
 exit;
 // Get the names for my combatants

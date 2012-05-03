@@ -14,8 +14,8 @@ class SwordsmanTest extends CombatantTest {
     );
 
 
-    protected function createCombatant($randomiser = null) {
-        return new Swordsman($randomiser);
+    protected function createCombatant($name, $randomiser = null) {
+        return new Swordsman($name, $randomiser);
     }
 
     /**
