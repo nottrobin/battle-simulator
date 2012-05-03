@@ -4,7 +4,7 @@ require_once('lib/robin/BattleSimulator/Blow.php');
 require_once('lib/robin/BattleSimulator/Retaliation.php');
 
 /**
- * This is a transaction class to be passed between Combatants in a BattleSimulation
+ * This is a transaction class to be passed between Combatants in a Simulation
  * It holds data about an attack made by one contestant on another
  *
  * @author robin@robinwinslow.co.uk
@@ -13,7 +13,9 @@ class Attack extends Blow {
     private $retaliation = null;
     private $stunning    = false;
     private $missed      = false;
+    private $isLucky     = false;
     private $multiplier  = 1;
+    private $damage      = 0;
     
     /**
      * An attack must be passed an $attackStrength at construction
@@ -28,16 +30,23 @@ class Attack extends Blow {
         $this->stunning = isset($stunning) ? $stunning : false;
     }
 
+    // Public methods
+    // ==
+
     public function getStrength() {
         return $this->strength * $this->multiplier;
     }
 
-    public function setMultiplier($multiplier) {
-        $this->multiplier = $multiplier;
+    public function getDamage() {
+        return $this->damage;
     }
 
     public function getBaseStrength() {
         return $this->strength;
+    }
+
+    public function getRetaliation() {
+        return $this->retaliation;
     }
 
     public function setStunning($isStunning) {
@@ -45,37 +54,42 @@ class Attack extends Blow {
         return true;
     }
 
-    public function isStunning() {
-        return $this->stunning;
+    public function setLucky($isLucky) {
+        $this->isLucky = $isLucky;
+
+        if($this->isLucky()) {
+            $this->multiplier = 2;
+        }
     }
-    
-    public function missed() {
-        $this->setDamage(0);
-        $this->missed = true;
-        
-        return true;
-    }
-    
-    public function hasMissed() {
-        return $this->missed;
-    }
-    
+
     public function setRetaliation(Retaliation $retaliation) {
         $this->retaliation = $retaliation;
         
         return true;
     }
     
-    public function getRetaliation() {
-        return $this->retaliation;
+    public function missed() {
+        $this->missed = true;
+        
+        return true;
+    }
+    
+    public function applyDefence($defenceStrength ) {
+        $this->damage = $this->getStrength() - $defenceStrength;
+
+        return true;
     }
 
-    public function applyDefence($defenceStrength ) {
-        $this->strength = $this->getStrength() - $defenceStrength;
-        if($this->getStrength() < 0) {
-            $this->strength = 0;
-        }
-        return true;
+    public function isLucky() {
+        return $this->isLucky;
+    }
+
+    public function isStunning() {
+        return $this->stunning;
+    }
+    
+    public function hasMissed() {
+        return $this->missed;
     }
 }
 

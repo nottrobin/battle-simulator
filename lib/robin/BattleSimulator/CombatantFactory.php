@@ -5,6 +5,11 @@ require_once('lib/robin/BattleSimulator/Swordsman.php');
 require_once('lib/robin/BattleSimulator/Brute.php');
 require_once('lib/robin/BattleSimulator/Grappler.php');
 
+/**
+ * This generates Combatants for use in (battle) Simulations.
+ * It is particularly useful for the CombatantFactory::createRandom method
+ * that will give you a random Combatant class
+ */
 class CombatantFactory {
     private $randomiser = null;
     private $classes = ['Swordsman', 'Brute', 'Grappler'];

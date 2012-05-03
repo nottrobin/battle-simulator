@@ -3,13 +3,28 @@
 require_once('lib/robin/BattleSimulator/Combatant.php');
 require_once('lib/robin/BattleSimulator/Turn.php');
 
+/**
+ * This is the main point of entry for a battle simulation
+ * It takes two combatants, and makes them fight.
+ * Simulation is advanced using Simulation::performTurn
+ */
+
 class Simulation {
     private $combatants;
+    private $combatantFactory;
     private $whoseTurn;
     private $turnsPassed = 0;
 
-    public function __construct(Combatant $firstCombatant, Combatant $secondCombatant) {
-        $this->combatants = [$firstCombatant, $secondCombatant];
+    public function __construct(
+        $firstCombatantName = null,
+        $secondCombatantName = null,
+        CombatantFactory $factory = null
+    ) {
+        $this->setCombatantFactory($factory);
+        $this->combatants = [
+            $this->getCombatantFactory()->createRandom($firstCombatantName),
+            $this->getCombatantFactory()->createRandom($secondCombatantName)
+        ];
         $this->whoseTurn  = $this->whoGoesFirst();
     }
 
@@ -25,28 +40,44 @@ class Simulation {
         return $turn;
     }
 
+    public function isOver() {
+        return $this->isWon() || $this->turnsPassed >= 30;
+    }
+
+    public function isWon() {
+        return $this->combatants[0]->getHealth() <= 0 || $this->combatants[1]->getHealth() <= 0;
+    }
+
     public function getWinner() {
         $winner = null;
 
-        if($this->isOver()) {
-            $one   = $this->combatants[0];
-            $two   = $this->combatants[1];
-            if($two->getHealth() <= 0 && $one->getHealth() > 0) {
-                $winner = $one;
-            } else if($one->getHealth() <= 0 && $two->getHealth() > 0) {
-                $winner = $two;
-            }
+        if($this->getLoser() == $this->combatants[0]) {
+            $winner = $this->combatants[1];
+        } else if($this->getLoser() == $this->combatants[1]) {
+            $winner = $this->combatants[0];
         }
 
         return $winner;
     }
 
-    public function isOver() {
-        $one   = $this->combatants[0];
-        $two   = $this->combatants[1];
-        return $one->getHealth() <= 0
-               || $two->getHealth() <= 0
-               || $this->turnsPassed >= 30;
+    public function getLoser() {
+        $loser = null;
+
+        if($this->combatants[0]->getHealth() <= 0) {
+            $loser = $this->combatants[0];
+        } else if($this->combatants[1]->getHealth() <= 0) {
+            $loser = $this->combatants[1];
+        }
+
+        return $loser;
+    }
+
+    public function getCombatant($key) {
+        return $this->combatants[$key];
+    }
+
+    public function getTurnNumber() {
+        return $this->turnsPassed;
     }
 
     private function switchTurn() {
@@ -81,6 +112,21 @@ class Simulation {
 
     private function getDefender() {
         return $this->combatants[1-$this->whoseTurn];
+    }
+
+    // Inline factory functions
+    // ==
+
+    public function setCombatantFactory(CombatantFactory $factory = null) {
+        $this->combatantFactory = $factory;
+    }
+
+    private function getCombatantFactory() {
+        if(!$this->combatantFactory instanceof CombatantFactory) {
+            $this->combatantFactory = new CombatantFactory();
+        }
+
+        return $this->combatantFactory;
     }
 }
 

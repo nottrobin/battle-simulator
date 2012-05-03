@@ -3,8 +3,11 @@
 require_once('lib/robin/BattleSimulator/Combatant.php');
 include_once('lib/robin/BattleSimulator/CombatantTraits.php');
 
+/**
+ * A class of Combatant, for use in (battle) Simulations
+ */
 class Swordsman extends Combatant {
-    use AttackDoubles;
+    use LuckyStrike;
 
     protected function generateHealth() {
         $this->health = (int) $this->randomNumberBetween(40, 60);

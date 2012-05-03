@@ -3,8 +3,11 @@
 require_once('lib/robin/BattleSimulator/Combatant.php');
 require_once('lib/robin/BattleSimulator/CombatantTraits.php');
 
+/**
+ * A class of Combatant for use in (battle) Simulations
+ */
 class Brute extends Combatant {
-    use Stuns;
+    use StunningBlow;
 
     protected function generateHealth() {
         $this->health = (int) $this->randomNumberBetween(90, 100);

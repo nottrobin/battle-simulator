@@ -3,6 +3,10 @@
 require_once('lib/robin/Random/Randomiser.php');
 require_once('lib/robin/BattleSimulator/BlowFactory.php');
 
+/**
+ * Combatants are participants in a (battle) Simulation
+ * This is the base class for combatants (currently Swordsman, Brute or Grappler)
+ */
 abstract class Combatant {
     protected $health           = null;
     protected $strength         = null;
@@ -44,6 +48,10 @@ abstract class Combatant {
         return $this->luck;
     }
     
+    public function getName() {
+        return $this->name;
+    }
+
     private function setName($name) {
         $success = false;
         
@@ -57,20 +65,15 @@ abstract class Combatant {
         return $success;
     }
     
-    public function getName() {
-        return $this->name;
-    }
-    
     public function createAttack() {
         return $this->getBlowFactory()->createAttack($this->getStrength());
     }
     
     public function receiveAttack(Attack $attack) {
-        $attack->applyDefence($this->getDefence());
-
         if($this->dodgedAttack()) {
             $attack->missed();
         } else {
+            $attack->applyDefence($this->getDefence());
             $attack = $this->receiveBlow($attack);
             $this->setStunned($attack->isStunning());
         }
@@ -78,11 +81,10 @@ abstract class Combatant {
         return $attack;
     }
 
-    public function receiveBlow(Blow $retaliation) {
-        $retaliation->setDamage($this->dealDamage($retaliation->getStrength()));
-        $retaliation->setKilling($this->isDead());
+    public function receiveBlow(Blow $blow) {
+        $this->dealDamage($blow->getDamage());
 
-        return $retaliation;
+        return $blow;
     }
     
     protected function dealDamage($damage) {
@@ -136,6 +138,16 @@ abstract class Combatant {
 
     public function isStunned() {
         return $this->stunned;
+    }
+
+    public function wasStunned() {
+        $stunned = $this->stunned;
+
+        if($stunned) {
+            $this->stunned = false;
+        }
+
+        return $stunned;
     }
 
     protected function setStunned($stunned) {

@@ -2,5 +2,13 @@
 
 require_once('lib/robin/BattleSimulator/Blow.php');
 
-class Retaliation extends Blow {}
+/**
+ * A type of Blow, this can be attached to an Attack to deal retaliation damage to a Combatant
+ */
+class Retaliation extends Blow {
+    public function getDamage() {
+        return $this->getStrength();
+    }
+}
+
 

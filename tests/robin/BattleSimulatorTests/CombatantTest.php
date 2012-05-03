@@ -128,7 +128,7 @@ abstract class CombatantTest extends PHPUnit_Framework_TestCase {
      * @test
      * @covers Combatant::receiveAttack
      */
-    public function canReceiveNonFatalAttack() {
+    public function canReceiveAttack() {
         // Generate attack - Note weak combatant will never dodge an attack (because we rigged the Randomiser)
         $expectedDamage = $this->weakCombatant->getHealth() - 1; // Do just less than the fatal amount of damage
         $attackStrength = $this->weakCombatant->getDefence() + $expectedDamage;
@@ -142,27 +142,8 @@ abstract class CombatantTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expectedDamage, $attack->getDamage());
         // Check it's not a stunning attack
         $this->assertFalse($attack->isStunning());
-        // Check it's not a killing attack
-        $this->assertFalse($attack->isKilling());
         // Check we have exactly one health left
         $this->assertEquals(1, $this->weakCombatant->getHealth());
-    }
-
-    /**
-     * @test
-     * @covers Combatant::receiveAttack
-     */
-    public function canReceiveFatalAttack() {
-        $healthBefore =  $this->weakCombatant->getHealth();
-
-        // Do just more than the fatal amount of damage
-        $attack = new Attack($this->weakCombatant->getDefence() + $this->weakCombatant->getHealth() + 1);
-        $attack = $this->weakCombatant->receiveAttack($attack);
-
-        // Check attack was killing
-        $this->assertTrue($attack->isKilling());
-        // Check damage is exactly the amount of health we had
-        $this->assertEquals($healthBefore, $attack->getDamage());
     }
 
     /**
@@ -181,26 +162,13 @@ abstract class CombatantTest extends PHPUnit_Framework_TestCase {
      * @test
      * @covers Combatant::receiveBlow
      */
-    public function canReceiveNonFatalRetaliation() {
+    public function canReceiveRetaliation() {
         $retaliationDamage = $this->weakCombatant->getHealth() - 1;
         $retaliation = new Retaliation($retaliationDamage);
         $healthBefore = $this->weakCombatant->getHealth();
         $retaliation = $this->weakCombatant->receiveBlow($retaliation);
-        $this->assertFalse($retaliation->isKilling());
+        $this->assertEquals(1, $this->weakCombatant->getHealth());
         $this->assertEquals($retaliationDamage, $retaliation->getDamage());
-    }
-
-    /**
-     * @test
-     * @covers Combatant::receiveBlow
-     */
-    public function canReceiveFatalRetaliation() {
-        $retaliationDamage = $this->weakCombatant->getHealth() + 1;
-        $retaliation = new Retaliation($retaliationDamage);
-        $healthBefore = $this->weakCombatant->getHealth();
-        $retaliation = $this->weakCombatant->receiveBlow($retaliation);
-        $this->assertTrue($retaliation->isKilling());
-        $this->assertEquals($healthBefore, $retaliation->getDamage());
     }
 }
 

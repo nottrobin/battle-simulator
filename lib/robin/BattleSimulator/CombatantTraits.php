@@ -3,8 +3,11 @@
 require_once('lib/robin/Random/Randomiser.php');
 include_once('lib/robin/BattleSimulator/Attack.php');
 
-// Traits
-trait AttackDoubles {
+/**
+ * Traits for Combatants to "use"
+ * These are special skills that give combatants a chance of having an advantage
+ */
+trait LuckyStrike {
     /**
      * @param Randomiser $randomiser Allows randomiser to be set just for this method - for testing
      * @return Attack
@@ -14,15 +17,15 @@ trait AttackDoubles {
         $attack = new Attack($this->getStrength());
 
         // 5% chance of doubling attack strength
-        if($randomiser->generateBoolean(0.02)) {
-            $attack->setMultiplier(2);
-        } 
+        if(!$attack->hasMissed()) {
+            $attack->setLucky($randomiser->generateBoolean(0.02));
+        }
 
         return $attack;
     }
 }
 
-trait Stuns {
+trait StunningBlow {
     /**
      * @param Randomiser $randomiser Allows randomiser to be set just for this method - for testing
      * @return Attack
@@ -32,24 +35,25 @@ trait Stuns {
         $attack = new Attack($this->getStrength());
 
         // 2% chance of stunning
-        $attack->setStunning($randomiser->generateBoolean(0.02));
+        if(!$attack->hasMissed()) {
+            $attack->setStunning($randomiser->generateBoolean(0.02));
+        }
         
         return $attack;
     }
 }
 
-trait HasRetaliation {
+trait CounterAttack {
     public function receiveAttack(Attack $attack) {
-        $potentialDamage = $attack->getStrength() - $this->getDefence();
-
         if($this->dodgedAttack()) {
             $attack->missed();
             $attack->setRetaliation($this->getBlowFactory()->createRetaliation(10));
         } else {
-            $damageDealt = $this->dealDamage($potentialDamage);
-            $attack->setDamage($damageDealt);
-            $attack->setKilling($this->isDead());
+            $attack->applyDefence($this->getDefence());
+            $attack = $this->receiveBlow($attack);
+            $this->setStunned($attack->isStunning());
         }
+
 
         return $attack;
     }

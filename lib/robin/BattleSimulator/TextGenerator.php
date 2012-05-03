@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * A fun class for generating random words for describing (battle) Simulations
+ */
 class TextGenerator {
     private $randomiser;
     private $verbs           = ['flung', 'flicked', 'threw', 'slid', 'heaved', 'swung', 'fired', 'nudged'];
